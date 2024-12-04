@@ -1,10 +1,10 @@
 using Radzen;
 using Conway.InterimPods.Presentation.Components;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Negotiate;
-using Microsoft.Identity.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
+using Conway.InterimPods.Infrastructure;
+using Conway.InterimPods.Core.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -27,6 +27,12 @@ builder.Services.AddHeaderPropagation(o => o.Headers.Add("Cookie"));
 builder.Services.AddScoped<AuthenticationStateProvider, Conway.InterimPods.Presentation.ApplicationAuthenticationStateProvider>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<Conway.InterimPods.Presentation.SecurityService>();
+
+builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.Configure<RemoteApiOptions>(
+    builder.Configuration.GetSection("RemoteApi"));
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,0 +1,72 @@
+﻿@page "/pod_management"
+
+@if (isLoading)
+{
+    <p>Loading data, please wait...</p>
+}
+else
+{
+    <EditForm Model="@podScans[currentIndex]" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <RadzenRow>
+            <RadzenColumn Size="10">
+                <div>
+                    @* <iframe src="@DocumentUrl" style="width: 100%; height: 800px"></iframe> *@
+                    <embed src="@DocumentUrl" style="width: 100%; height: 800px" />
+                </div>
+            </RadzenColumn>
+            <RadzenColumn Size="2">
+                <RadzenStack Orientation="Orientation.Vertical">
+                    <RadzenCard>
+                        <RadzenLabel TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Time On Site</RadzenLabel>
+                        <RadzenTextBox Style="width: 100%" @bind-Value="@podScans[currentIndex].TimeOnSite"></RadzenTextBox>
+                    </RadzenCard>
+                    <RadzenCard>
+                        <RadzenLabel TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Start Offload</RadzenLabel>
+                        <RadzenTextBox Style="width: 100%" @bind-Value="@podScans[currentIndex].StartOffload"></RadzenTextBox>
+                    </RadzenCard>
+                    <RadzenCard>
+                        <RadzenLabel TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Time Off Site</RadzenLabel>
+                        <RadzenTextBox Style="width: 100%" @bind-Value="@podScans[currentIndex].TimeOffSite"></RadzenTextBox>
+                    </RadzenCard>
+                    <RadzenCard>
+                        <RadzenLabel TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Ticket No</RadzenLabel>
+                        <RadzenTextBox Style="width: 100%" @bind-Value="TicketIdString"></RadzenTextBox>
+                    </RadzenCard>
+                    <RadzenCard>
+                        <RadzenLabel TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Order No</RadzenLabel>
+                        <RadzenTextBox Style="width: 100%" @bind-Value="OrderIdString"></RadzenTextBox>
+                    </RadzenCard>
+                    <RadzenCard>
+                        <RadzenLabel TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Url</RadzenLabel>
+                        <RadzenTextBox Style="width: 100%" @bind-Value="DocumentUrl"></RadzenTextBox>
+                    </RadzenCard>
+                    <RadzenCard>
+                        <RadzenLabel TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Document Id</RadzenLabel>
+                        <RadzenNumeric Style="width: 100%" @bind-Value="podScans[currentIndex].Id"></RadzenNumeric>
+                    </RadzenCard>
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+    <RadzenRow>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="10px" AlignItems="AlignItems.Center">
+            <RadzenButton Icon="arrow_back" Click="Previous" Disabled="@(currentIndex == 0)" />
+            <p>@($"{currentIndex + 1} / {TotalCount}")</p>
+            <RadzenButton Icon="arrow_forward" Click="Next" Disabled="@(currentIndex == podScans.Count - 1)" />
+        </RadzenStack>
+    </RadzenRow>
+
+}
+<RadzenButton Text="Process Directory" Click="@ProcessDirectory"></RadzenButton>
+@if (isProcessing)
+{
+    {
+        <div class="rz-m-12">
+            <RadzenText Text="Processing Files..."></RadzenText>
+            <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+        </div>
+    }
+}
