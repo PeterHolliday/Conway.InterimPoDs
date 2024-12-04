@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Conway.InterimPods.Application\Conway.InterimPods.Application.csproj" />
+    <ProjectReference Include="..\Conway.InterimPods.Core\Conway.InterimPods.Core.csproj" />
+  </ItemGroup>
+
+</Project>
